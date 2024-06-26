@@ -1,0 +1,10 @@
+{
+  "name": "intake-manager-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/intake-manager-e2e/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["intake-manager"],
+  "// targets": "to see all targets run: nx show project intake-manager-e2e --web",
+  "targets": {}
+}

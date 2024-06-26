@@ -1,0 +1,13 @@
+{
+  "name": "@projects/react-components",
+  "repository": "https://github.com/tprojects1/projects.git",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  }
+}

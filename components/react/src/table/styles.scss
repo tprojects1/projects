@@ -1,0 +1,451 @@
+@import '../../../../assets/styles/variables';
+@import '../../../../assets/styles/mixins';
+
+.table {
+    height: calc(100vh - 80px);
+    // margin-top: 1rem;
+    // overflow: auto;
+    overflow: hidden;
+    margin-top: -.25rem;
+    width: 100%;
+
+    &.sortable {
+        thead {
+            th {
+                color: map-get($colors, "primary");
+                cursor: pointer;
+            }
+        }
+    }
+
+    &.editable {
+        tbody {
+            tr {
+                border-top: 1px solid map-get($colors, "neutral");
+
+                &:first-child {
+                    border-color: transparent;
+                }
+
+                &:hover {
+                    background: lighten(map-get($colors, "primary"), 35%);
+                    color: darken(map-get($colors, "primary"), 10%);
+                    transition: .4s background-color ease-in-out;
+
+                    /*[data-name="id"] {
+                        background: #fff;
+                        @include breakpoint(medium) {
+                            background: none;
+                        }
+                    }*/
+
+                }
+
+                &.selected {
+                    background: darken(map-get($colors, "primary"), 10%);
+
+                    // transition: none;
+                    * {
+                        color: #fff;
+                        transition: none;
+                    }
+                }
+            }
+        }
+
+        td {
+            cursor: pointer;
+        }
+    }
+
+    &.has-page-controls {
+        #table-container {
+            // height: calc(100vh - 152px);
+        }
+        table {
+            &:after {
+                content: '';
+                display: block;
+                height: 118px;
+                @include breakpoint(medium) {
+                    height: 124px;
+                }
+            }
+        }
+    }
+
+    &.is-showing-a-data-panel {
+        @include breakpoint(medium) {
+            table {
+                margin-right: 0;
+            }
+            /*#table-container {
+                &:after {
+                    background: #000;
+                    content: '';
+                    height: 100%;
+                    left: 0;
+                    opacity: .4;
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                    z-index: 1;
+                }
+            }*/
+        }        
+    }
+
+    #table-container {
+        
+        gap: 1rem;
+        height: inherit;        
+        overflow: auto;
+        overflow-x: hidden;
+        position: relative;
+        top: -28px;
+        // z-index: 1;
+        
+        > div:not(.data-panel) {
+            display: flex;
+            flex-direction: column;
+            @include breakpoint(medium) {
+                flex-direction: row;
+                overflow: auto;
+            }
+        }
+    }
+
+    #search {
+        background: #fff;
+        display: flex;
+        gap: .5rem;
+        flex-direction: column;
+        margin: 0;
+        padding-bottom: .25rem;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        width: calc(100% - 1.25rem);
+
+        @include breakpoint(490px) {
+            align-items: center;
+            flex-direction: row;
+        }
+
+        &:after {
+            background: #fff;
+            bottom: -.5rem;
+            content: '';
+            height: .5rem;
+            left: 0;
+            position: absolute;
+            width: 100%;
+        }
+
+        >div {
+            margin: 0;
+            max-width: 260px;
+
+            +label {
+                cursor: pointer;
+                font: inherit;
+                font-size: .75rem;
+                margin: 0;
+
+                [type="checkbox"] {
+                    top: 2px;
+                }
+            }
+        }
+
+        [type="search"] {
+            padding-left: 1.5rem;
+
+            &::placeholder {
+                color: darken(map-get($colors, "neutral"), 30%);
+            }
+        }
+
+        +div {
+            // margin-top: .75rem;
+            margin-top: 0;
+
+            /*thead {
+                top: 36px;
+
+            }*/
+        }
+    }
+
+    table {
+        border-collapse: collapse;
+        height: fit-content;
+        margin: 0 1rem 0 0;        
+        table-layout: auto;        
+        @media (max-width: 767px) {
+            width: calc(100% - 1rem) !important;
+        }
+        @include breakpoint(medium) {
+            // width: 100% !important;
+        }
+    }
+
+    thead {
+        background: #fff;
+        
+        position: sticky;
+        top: 28px;
+        z-index: 1;
+
+        @include breakpoint(medium) {
+            display: table-header-group;
+        }
+
+        &:before {
+            background: #fff;
+            bottom: 0;
+            content: '';
+            height: 1rem;
+            width: calc(100% + 1rem);
+            position: absolute;
+            z-index: 1;
+        }
+
+        &:after {
+            box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.08);
+            bottom: 0;
+            content: '';
+            height: 1rem;
+            width: calc(100% - .5rem);
+            position: absolute;
+        }
+        th {
+            display: none;
+            &:first-child {
+                cursor: default;
+                display: table-cell;
+            }
+            @include breakpoint(medium) {
+                display: table-cell;
+            }
+        }
+    }
+
+    tbody {
+        display: block;
+        position: relative;
+        top: 28px;
+
+        @include breakpoint(medium) {
+            display: table-row-group;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+
+            @include breakpoint(medium) {
+                display: table-row;
+            }
+
+            &:first-child {
+                td {
+                    // padding-top: .875rem;
+                    // transition: none;
+                }
+            }
+
+            td {
+                // display: block;                
+                margin: 0;
+
+                &[data-name] {         
+                    font-family: 'cera round pro bold';           
+                    // left: 4.5rem;
+                    position: relative;
+
+                    @include breakpoint(medium) {
+                        font-family: inherit;
+                        left: 0;
+                    }
+
+                    &:before {
+                        display: block;
+                        font-family: 'cera round pro regular';
+                        @include breakpoint(medium) {
+                            display: none;
+                        }
+                    }
+                }
+
+                /*&[data-name="id"] {
+                    align-items: center;
+                    // background: lighten(map-get($colors, "primary"), 30%);
+                    background: #fff;
+                    border: 2px solid lighten(map-get($colors, "primary"), 30%);
+                    border-radius: 100%;   
+                    display: flex;
+                    font-size: .75rem;
+                    justify-content: center;                 
+                    height: 2rem;
+                    left: .5rem;
+                    position: absolute;
+                    text-align: center;
+                    top: .75rem;
+                    width: 2rem;
+
+                    @include breakpoint(medium) {
+                        background: none;        
+                        border: none;                                                             
+                        font-family: inherit;
+                        font-size: inherit;
+                        height: 100%;
+                        justify-content: left;
+                        position: static;
+                        width: auto;
+                    }                    
+                }*/
+
+                &[data-name="id"] {
+                    display: flex;
+                    gap: .25rem;
+                    top: 3.75rem;
+                    @include breakpoint(medium) {
+                        display: table-cell;
+                    }
+                    &:before {
+                        content: 'ID:';                        
+                    }
+                }
+
+                &[data-name="patient_name"] {
+                    &:before {
+                        content: 'Patient Name';
+                    }
+                }
+
+                &[data-name="doctor_name"] {
+                    &:before {
+                        content: 'Doctor Name';
+                    }
+                }
+
+                &[data-name="patient_phone"] {
+                    &:before {
+                        content: 'Patient Phone';
+                    }
+                }
+
+                &[data-name="doctor_phone"] {
+                    &:before {
+                        content: 'Doctor Phone';
+                    }
+                }
+
+                &[data-name="id"], &[data-name="date"], &[data-name="status"] {
+                    left: auto;
+                    position: absolute;
+                    right: 0;
+
+                    @include breakpoint(medium) {
+                        position: static;
+                    }
+                }               
+
+                &[data-name="status"] {
+                    top: 2rem;                 
+                }
+            }
+
+            .no-results {
+                h4 {
+                    color: map-get($colors, "error");
+                    margin-top: .75rem;
+
+                    +p {
+                        margin: .75rem 0 0 0;
+                    }
+                }
+            }
+        }
+    }
+
+    th,
+    td {
+        padding: .5rem;
+        width: auto;
+        word-wrap: break-word;
+
+        @include breakpoint(medium) {
+            max-width: 100px;
+        }
+    }
+
+    th {
+        font-family: 'cera round pro bold';
+        position: relative;
+        z-index: 1;
+        padding: .5rem;
+
+        div {
+            display: flex;
+            gap: .5rem;
+
+            i {
+                margin: 0;
+                position: relative;
+
+                // width: 20%;
+                &:after {
+                    font-family: 'Font Awesome 6 Free';
+                    font-weight: 900;
+                    height: 100%;
+                    position: absolute;
+                    top: calc(50% - 3px);
+                }
+            }
+        }
+
+        span {
+            font-family: 'cera round pro medium';
+            // width: 80%;
+        }
+
+        &.ascending {
+            i:after {
+                content: "\f0de";
+            }
+        }
+
+        &.descending {
+            i:after {
+                content: "\f0dd";
+                top: calc(50% - 11px);
+            }
+        }
+
+        button {
+            background: none;
+            border: none;
+            color: darken(map-get($colors, "primary"), 20%);
+            cursor: pointer;
+            margin: 0;
+            text-align: left;
+            padding: 0;
+        }
+    }
+
+    .tag {
+        position: relative;
+        top: -2px;
+    }    
+
+    .toolbar {        
+        position: relative;
+        top: 40px;
+        &.hidden {
+
+        }
+    }
+}
